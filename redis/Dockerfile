@@ -11,7 +11,7 @@ LABEL org.opencontainers.image.authors="https://bitnami.com/contact" \
       org.opencontainers.image.version="6.2.8"
 
 ENV HOME="/" \
-    OS_ARCH="${TARGETARCH:-amd64}" \
+    OS_ARCH="${TARGETARCH:-arm64}" \
     OS_FLAVOUR="debian-11" \
     OS_NAME="linux"
 
