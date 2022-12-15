@@ -47,11 +47,12 @@ jobs:
 
       - name: Create docker context for CI
         run: |
-          docker context create ci-context
-          docker --context ci-context
+          docker context create tls-environment
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+        with:
+          endpoint: tls-environment
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
