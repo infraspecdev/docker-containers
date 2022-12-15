@@ -45,6 +45,9 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: See docker context
+        run: docker context ls
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
