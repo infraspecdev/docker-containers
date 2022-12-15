@@ -15,7 +15,8 @@ ENV HOME="/" \
     OS_FLAVOUR="debian-11" \
     OS_NAME="linux"
 
-ADD https://github.com/bitnami/containers/tree/main/bitnami/redis/6.2/debian-11/prebuildfs/ /
+RUN apt-get install git && git clone https://github.com/bitnami/containers.git .
+COPY containers/bitnami/redis/6.2/debian-11/prebuildfs/ /
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Install required system packages and dependencies
 RUN install_packages ca-certificates curl libssl1.1 procps
@@ -41,7 +42,7 @@ RUN chmod g+rwX /opt/bitnami
 RUN ln -s /opt/bitnami/scripts/redis/entrypoint.sh /entrypoint.sh
 RUN ln -s /opt/bitnami/scripts/redis/run.sh /run.sh
 
-ADD https://github.com/bitnami/containers/tree/main/bitnami/redis/6.2/debian-11/rootfs/ /
+COPY containers/bitnami/redis/6.2/debian-11/rootfs/ /
 RUN /opt/bitnami/scripts/redis/postunpack.sh
 ENV APP_VERSION="6.2.8" \
     BITNAMI_APP_NAME="redis" \
