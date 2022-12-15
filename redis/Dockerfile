@@ -15,6 +15,7 @@ ENV HOME="/" \
     OS_FLAVOUR="debian-11" \
     OS_NAME="linux"
 
+RUN apt install git
 RUN git clone https://github.com/bitnami/containers.git
 COPY containers/bitnami/redis/6.2/debian-11/prebuildfs /
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -35,7 +36,7 @@ RUN mkdir -p /tmp/bitnami/pkg/cache/ && cd /tmp/bitnami/pkg/cache/ && \
       tar -zxf "${COMPONENT}.tar.gz" -C /opt/bitnami --strip-components=2 --no-same-owner --wildcards '*/files' && \
       rm -rf "${COMPONENT}".tar.gz{,.sha256} ; \
     done
-RUN apt-get autoremove --purge -y curl && \
+RUN apt-get autoremove --purge -y curl git && \
     apt-get update && apt-get upgrade -y && \
     apt-get clean && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 RUN chmod g+rwX /opt/bitnami
