@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  directories:
+    runs-on: ubuntu-22.04
+    outputs:
+      dir: ${{ steps.set-dirs.outputs.dir }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - id: set-dirs
+        run: echo "::set-output name=dir::$(ls -d */ | jq -R -s -c 'split("\n")[:-1]')"
+
+      - name: print dirs
+        run: echo ${{ steps.set-dirs.outputs.dir }}
+
+  build:
+    runs-on: self-hosted
+    needs: [ directories ]
+    strategy:
+      matrix:
+        path: ${{fromJson(needs.directories.outputs.dir)}}
+    defaults:
+      run:
+        working-directory: ${{ matrix.path }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Docker image
+        run: docker build -t ${{ matrix.path }} .
