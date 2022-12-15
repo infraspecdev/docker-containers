@@ -16,6 +16,7 @@ ENV HOME="/" \
     OS_NAME="linux"
 
 RUN apt-get install git && git clone https://github.com/bitnami/containers.git .
+RUN ls . && ls containers/ && ls containers/bitnami/redis/6.2/debian-11/prebuildfs/
 COPY containers/bitnami/redis/6.2/debian-11/prebuildfs/ /
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Install required system packages and dependencies
