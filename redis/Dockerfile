@@ -18,6 +18,7 @@ ENV HOME="/" \
 COPY prebuildfs /
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Install required system packages and dependencies
+RUN apt-get update && apt-get upgrade -y
 RUN install_packages ca-certificates curl libssl1.1 procps
 RUN mkdir -p /tmp/bitnami/pkg/cache/ && cd /tmp/bitnami/pkg/cache/ && \
     COMPONENTS=( \
