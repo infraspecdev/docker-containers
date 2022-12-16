@@ -34,4 +34,4 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build docker image
-        run: docker build --no-cache -t ${{ github.repository }}:${{ matrix.path }} .
+        run: docker build --network host --no-cache -t ${{ github.repository }}:${{ matrix.path }} .
