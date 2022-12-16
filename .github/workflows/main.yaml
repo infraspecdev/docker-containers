@@ -33,9 +33,6 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v3
 
-      - name: Update && Upgrade
-        run: sudo apt-get update && sudo apt-get upgrade -y
-
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
