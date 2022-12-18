@@ -1,9 +1,9 @@
 FROM frappe/bench:latest as assets_builder
 
-ARG FRAPPE_VERSION
+ARG FRAPPE_VERSION=v14.19.1
 ARG FRAPPE_REPO=https://github.com/frappe/frappe
-ARG PYTHON_VERSION
-ARG NODE_VERSION
+ARG PYTHON_VERSION=3.10.5
+ARG NODE_VERSION=v16.8.0
 ENV NVM_DIR=/home/frappe/.nvm
 ENV PATH ${NVM_DIR}/versions/node/v${NODE_VERSION}/bin/:${PATH}
 RUN PYENV_VERSION=${PYTHON_VERSION} bench init --version=${FRAPPE_VERSION} --frappe-path=${FRAPPE_REPO} --skip-redis-config-generation --verbose --skip-assets /home/frappe/frappe-bench
@@ -22,7 +22,7 @@ RUN bench setup requirements \
 
 FROM assets_builder as erpnext_assets
 
-ARG ERPNEXT_VERSION
+ARG ERPNEXT_VERSION=v14.10.1
 ARG ERPNEXT_REPO=https://github.com/frappe/erpnext
 RUN bench get-app --branch=${ERPNEXT_VERSION} --skip-assets --resolve-deps erpnext ${ERPNEXT_REPO}\
     && if [ -z "${ERPNEXT_VERSION##*v14*}" ] || [ "$ERPNEXT_VERSION" = "develop" ]; then \
